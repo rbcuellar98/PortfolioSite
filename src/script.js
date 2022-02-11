@@ -39,6 +39,7 @@ gradientTexture.magFilter = THREE.NearestFilter
 // Material 
 const material = new THREE.MeshToonMaterial({color: parameters.materialColor, gradientMap: gradientTexture})
 // Meshes
+const objectsDistance = 4
 const mesh1 = new THREE.Mesh(
     new THREE.TorusGeometry(1, 0.4,16,60),
     material
@@ -48,12 +49,21 @@ const mesh2 = new THREE.Mesh(
     material
 )
 const mesh3 = new THREE.Mesh(
-    new THREE.SphereGeometry(0.8, 0.35,.100, 16),
+    new THREE.SphereGeometry( 1.3, 16, 8 ),
     material
    // new THREE.MeshBasicMaterial({color: '#ff0000'})
 )
+mesh1.position.y = - objectsDistance * 0
+mesh2.position.y = - objectsDistance * 1
+mesh3.position.y = - objectsDistance * 2
+// object position from left and right
+mesh1.position.x = 2
+mesh2.position.x = -2
+mesh3.position.x = 2
 // added objects to the scenes
 scene.add(mesh1, mesh2, mesh3);
+// array with meshes
+const sectionMeshes = [mesh1, mesh2, mesh3]
 /**
  * Lights
  */
@@ -100,7 +110,28 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+/**
+ * Scroll
+ */
+let scrollY = window.scrollY
 
+window.addEventListener('scroll', ()=>{
+    scrollY = window.scrollY
+    
+})
+/**
+ * Cursor
+ */
+const cursor = {}
+cursor.x = 0
+cursor.y = 0
+// user mouse movement
+window.addEventListener('mousemove', (event) => {
+    cursor.x=event.clientX / sizes.width - 0.5 // make value as small as possible
+    cursor.y=event.clientY / sizes.height - 0.5
+
+    
+})
 /**
  * Animate
  */
@@ -109,6 +140,21 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    //Animate camera
+    // Objects assign to each section of the page
+    camera.position.y = - scrollY / sizes.height * objectsDistance
+    // cursor movement with objects
+    const parallaxX = cursor.x
+    const parallaxY = cursor.y
+    camera.position.x = parallaxX
+    camera.position.y = parallaxY
+    // Animate meshes
+    for(const mesh of sectionMeshes){
+        // rotation related to time
+        mesh.rotation.x = elapsedTime * 0.1
+        mesh.rotation.y = elapsedTime * 0.12
+
+    }
 
     // Render
     renderer.render(scene, camera)
