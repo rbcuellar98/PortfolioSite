@@ -65,6 +65,29 @@ scene.add(mesh1, mesh2, mesh3);
 // array with meshes
 const sectionMeshes = [mesh1, mesh2, mesh3]
 /**
+ * Particles
+ */
+// Geometry
+const particlesCount = 250
+const positions = new Float32Array(particlesCount * 3) // store all of x y and z
+// loop to make particles
+for(let i = 0; i < particlesCount; i++){
+    positions[i * 3 + 0] = Math.random()
+    positions[i * 3 + 1] = Math.random()
+    positions[i * 3 + 2] = Math.random()
+}
+const particlesGeometry = new THREE.BufferGeometry()
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+// Material
+const particlesMaterial = new THREE.PointsMaterial({
+    color:parameters.materialColor,
+    sizeAttenuation: true,
+    size: 0.03
+})
+// points
+const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+scene.add(particles)
+/**
  * Lights
  */
 const directionalLight = new THREE.DirectionalLight('#ffffff', 1)
@@ -96,10 +119,13 @@ window.addEventListener('resize', () =>
 /**
  * Camera
  */
+// Group
+const cameraGroup = new THREE.Group()
+scene.add(cameraGroup)
 // Base camera
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 6
-scene.add(camera)
+cameraGroup.add(camera)
 
 /**
  * Renderer
@@ -136,23 +162,31 @@ window.addEventListener('mousemove', (event) => {
  * Animate
  */
 const clock = new THREE.Clock()
+// calculate delta time meaning time between now and each frame
+let previousTime = 0
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime // current time - time before
+    // update time for the next frame
+    previousTime = elapsedTime
     //Animate camera
     // Objects assign to each section of the page
     camera.position.y = - scrollY / sizes.height * objectsDistance
     // cursor movement with objects
     const parallaxX = cursor.x
-    const parallaxY = cursor.y
-    camera.position.x = parallaxX
-    camera.position.y = parallaxY
+    const parallaxY = - cursor.y // invalid cursor movement with opposite
+    // move group objects with the scroll since the camera moves inside the group
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
     // Animate meshes
     for(const mesh of sectionMeshes){
         // rotation related to time
         mesh.rotation.x = elapsedTime * 0.1
         mesh.rotation.y = elapsedTime * 0.12
+        mesh3.rotation.x = elapsedTime * - 0.12
+        mesh3.rotation.y = elapsedTime * - 0.12
 
     }
 
