@@ -6,18 +6,18 @@ import gsap from 'gsap'
 /**
  * Debug
  */
-const gui = new dat.GUI()
+// const gui = new dat.GUI()
 
 const parameters = {
     materialColor: '#ffeded'
 }
 
-gui
-    .addColor(parameters, 'materialColor')
-    .onChange(()=>{
-        material.color.set(parameters.materialColor)
-        particlesMaterial.color.set(parameters.materialColor)
-    })
+// gui
+//     .addColor(parameters, 'materialColor')
+//     .onChange(()=>{
+//         material.color.set(parameters.materialColor)
+//         particlesMaterial.color.set(parameters.materialColor)
+//     })
 
 /**
  * Base

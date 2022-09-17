@@ -34,3 +34,82 @@ section:nth-child(odd)
 {
     justify-content: flex-end;
 }
+
+#contact{
+    background: #2f2434;
+    color: #ffeded;
+    font-size: 10vmin;
+    text-align: center;
+    font-family: 'Cabin', sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+}
+.links{
+    text-decoration:none;
+    color: #ffeded;
+    
+
+    
+}
+.links:hover{
+    text-decoration: underline;
+    color: #ffeded;
+}
+
+#github{
+    background: #1e1a20;
+    color: #ffeded;
+    font-size: 2vmin;
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 0.5%;
+    margin-right: 0.1%;
+    font-family: 'Cabin', sans-serif;
+    text-transform: lowercase !important;
+    position: absolute;
+    align-items: center;
+}  
+#casual::after:visited{
+    color: #eb9c9ca6;
+    
+}
+#casual:hover{
+    color: #7dffcd;
+    
+}
+
+#personal:hover{
+    color: #7dffcd;
+}
+#professional:hover{
+    color: #7dffcd;
+}
+#email{
+    background: #1e1a20;
+    color: #ffeded;
+    font-size: 2vmin;
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 5.5%;
+    margin-right: 10.1%;
+    font-family: 'Cabin', sans-serif;
+    text-transform: lowercase !important;
+    position: absolute;
+    align-items: center;
+} 
+#linkedin{
+    background: #1e1a20;
+    color: #ffeded;
+    font-size: 2vmin;
+    text-align: center;
+    margin-top: 10%;
+    margin-left: 9.8%;
+    margin-right: 9.5%;
+    align-items: center;
+    font-family: 'Cabin', sans-serif;
+    text-transform: lowercase !important;
+    position: absolute;
+    text-decoration:none;
+}    
+
+
